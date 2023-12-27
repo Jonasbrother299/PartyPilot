@@ -1,44 +1,45 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Image, ActivityIndicator, Alert } from 'react-native';
-import { COLORS, images } from '../../constants';
-import { supabase } from '../../config/supabaseConfig';
-
-export default function ProfileImage({ dimension, focused, session }) {
+import React, { useState, useCallback, useEffect } from "react";
+import { StyleSheet, View, Image, Alert } from "react-native";
+import { COLORS, images } from "../../constants";
+import { supabase } from "../../config/supabaseConfig";
+import { useSession } from "../../hooks/useSession";
+import { useFocusEffect } from "@react-navigation/native";
+export default function ProfileImage({ dimension, focused }) {
   const [avatarUrl, setAvatarUrl] = useState(null);
 
-  useEffect(() => {
-    async function loadAvatarUrl() {
-      try {
-        if (!session.user || !session.user.id) return;
+  const { session } = useSession();
+  const fetchData = useCallback(async () => {
+    try {
+      if (!session || !session.user || !session.user.id) return;
 
-        const { data, error } = await supabase
-          .from('profiles')
-          .select('avatar_url')
-          .eq('id', session.user.id)
-          .single();
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("avatar_url")
+        .eq("id", session.user.id)
+        .single();
 
-        if (error) {
-          throw error;
-        }
-
-        if (data && data.avatar_url) {
-          try {
-            const imageUrl = `https://gxpswfomuonmydpsyenb.supabase.co/storage/v1/object/public/avatars/${data.avatar_url}`;
-            setAvatarUrl(imageUrl);
-
-          } catch (error) {
-            console.error('Error downloading image:', error.message);
-            Alert.alert('Error', 'Failed to download image. Please try again.');
-          }
-        }
-      } catch (error) {
-        console.error('Error loading image:', error.message);
-        Alert.alert('Error', 'Failed to load image. Please try again.');
+      if (error) {
+        throw error;
       }
-    }
 
-    loadAvatarUrl();
+      if (data && data.avatar_url) {
+        try {
+          const imageUrl = `https://gxpswfomuonmydpsyenb.supabase.co/storage/v1/object/public/avatars/${data.avatar_url}`;
+          setAvatarUrl(imageUrl);
+        } catch (error) {
+          console.error("Error downloading image:", error.message);
+          Alert.alert("Error", "Failed to download image. Please try again.");
+        }
+      }
+    } catch (error) {
+      console.error("Error loading image:", error.message);
+      // Alert.alert('Error', 'Failed to load image. Please try again.');
+    }
   }, [session]);
+
+  useFocusEffect(() => {
+    fetchData();
+  });
 
   const styles = StyleSheet.create({
     image: {

@@ -1,8 +1,18 @@
-import profile from "../../assets/DefaultAvatar.webp";
-import Logo from "../../assets/Logo.png";
-import CocktailImage from "../../assets/CocktailImage.jpg";
-import Background from "../../assets/Background.png";
+import { Asset } from "expo-asset";
 
+const profile = require("../../assets/DefaultAvatar.webp");
+const Logo = require("../../assets/Logo.png");
+const CocktailImage = require("../../assets/CocktailImage.jpg");
+const Background = require("../../assets/Background.png");
+
+// Function to preload the background image
+export const preloadBackgroundImage = async () => {
+  try {
+    await Asset.fromModule(Background).downloadAsync();
+  } catch (error) {}
+};
+
+// Export the images
 export default {
   profile,
   Logo,

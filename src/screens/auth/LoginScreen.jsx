@@ -1,21 +1,13 @@
 import React, { useState } from "react";
-import {
-  Alert,
-  StyleSheet,
-  View,
-  Pressable,
-  SafeAreaView,
-  Text,
-  TextInput,
-} from "react-native";
+import { StyleSheet, View, Text, TextInput } from "react-native";
 import { supabase } from "../../config/supabaseConfig";
-import { Button, Input } from "react-native-elements";
-import { COLORS, images } from "../../constants";
-import { LinearGradient } from "expo-linear-gradient";
-import CTAButton from "../../components/CTAButton/CTAButton";
-import Logo from "../../components/Image/Logo";
 import { useNavigation } from "@react-navigation/native";
 import * as Haptics from "expo-haptics";
+
+import { LinearGradient } from "expo-linear-gradient";
+import { COLORS, images } from "../../constants";
+import CTAButton from "../../components/Basics/CTAButton/CTAButton";
+import Logo from "../../components/Basics/Image/Logo";
 
 export default function Auth() {
   const [email, setEmail] = useState("");
@@ -84,6 +76,7 @@ export default function Auth() {
               title="Login"
               onPress={signInWithEmail}
               variant="primary"
+              height={50}
             />
 
             <Text style={styles.textSignUp}>

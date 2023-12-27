@@ -9,15 +9,16 @@ import {
   Modal,
   Image,
 } from "react-native";
-import { COLORS, SIZES, images, icons } from "../../constants";
 import DatePicker from "react-native-modern-datepicker";
 import { getFormatedDate } from "react-native-modern-datepicker";
 import { supabase } from "../../config/supabaseConfig";
 import { useSession } from "../../hooks/useSession";
 import { useNavigation } from "@react-navigation/native";
-import Icons from "../../components/Image/icons";
 import { LinearGradient } from "expo-linear-gradient";
-import Spacer from "../../components/Spacer/spacer";
+
+import { COLORS, SIZES, images, icons } from "../../constants";
+import Icons from "../../components/Basics/Image/icons";
+import Spacer from "../../components/Basics/Spacer/spacer";
 
 export default function CreateEvent() {
   const { session } = useSession();

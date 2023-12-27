@@ -1,22 +1,11 @@
-import React, { useState } from "react";
 import { StyleSheet, View, TouchableOpacity } from "react-native";
 
 import { COLORS, icons } from "../../constants";
 import { useNavigation } from "@react-navigation/native";
-import Icons from "../Image/icons";
+import Icons from "../Basics/Image/icons";
 
 export default function SearchIcon() {
-  const [searchText, setSearchText] = useState("");
-
   const navigation = useNavigation();
-
-  const handleGoBack = () => {
-    navigation.navigate("Home");
-  };
-
-  const handleTextInputChange = (text) => {
-    setSearchText(text);
-  };
 
   return (
     <View style={styles.container}>

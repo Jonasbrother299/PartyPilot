@@ -6,10 +6,11 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import CreateEvent from "../screens/Create/createEvent";
 import CreateRecipe from "../screens/Create/createRecipe";
 import EventDetail from "../screens/Create/EventDetail";
+import RecipeDetail from "../screens/Create/RecipeDetail";
 import MainTabNavigator from "./MainTabNavigator";
 import SearchIcon from "../components/Search/SearchIcon";
-import Search from "../components/Search/Search";
-import { COLORS } from "../constants";
+import Search from "../screens/Search/Search";
+import EditProfile from "../screens/Profile/EditProfile";
 
 const Stack = createNativeStackNavigator();
 
@@ -57,6 +58,24 @@ export default function UserStack() {
         <Stack.Screen
           name="EventDetail"
           component={EventDetail}
+          options={{
+            presentation: "transparentModal",
+            animationTypeForReplace: "pop",
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="RecipeDetail"
+          component={RecipeDetail}
+          options={{
+            presentation: "transparentModal",
+            animationTypeForReplace: "pop",
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="EditProfile"
+          component={EditProfile}
           options={{
             presentation: "transparentModal",
             animationTypeForReplace: "pop",

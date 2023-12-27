@@ -1,9 +1,9 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import LoginScreen from '../screens/auth/LoginScreen';
-import RegisterScreen from '../screens/auth/RegisterScreen';
+import LoginScreen from "../screens/auth/LoginScreen";
+import RegisterScreen from "../screens/auth/RegisterScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -13,24 +13,27 @@ export default function AuthStack() {
       <Stack.Navigator
         screenOptions={{
           cardStyle: {
-            backgroundColor: 'transparent'
+            backgroundColor: "transparent",
           },
           headerShown: false,
-        }}>
+        }}
+      >
         <Stack.Screen
           name="Login" // name to navigate to this component
           component={LoginScreen}
           options={{
-            presentation: 'transparentModal', 
-            animationTypeForReplace: "push"
-          }} />
+            presentation: "transparentModal",
+            animationTypeForReplace: "push", // type of animation for the page transition
+          }}
+        />
         <Stack.Screen
           name="Register" // name to navigate to this component
           component={RegisterScreen}
           options={{
-            presentation: 'transparentModal',
-            animationTypeForReplace: "pop"
-          }} />
+            presentation: "transparentModal",
+            animationTypeForReplace: "pop", // type of animation for the page transition
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

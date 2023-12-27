@@ -1,47 +1,53 @@
-import React, { useState } from 'react'
-import { Alert, StyleSheet, View, Pressable, SafeAreaView, Text, TextInput } from 'react-native'
-import { supabase } from '../../config/supabaseConfig'
-import { Button, Input } from 'react-native-elements'
-import { COLORS, images } from '../../constants'
-import { LinearGradient } from 'expo-linear-gradient';
-import CTAButton from "../../components/CTAButton/CTAButton"
-import Logo from '../../components/Image/Logo'
+import React, { useState } from "react";
+import { Alert, StyleSheet, View, Text, TextInput } from "react-native";
+import { supabase } from "../../config/supabaseConfig";
 import { useNavigation } from "@react-navigation/native";
+import { LinearGradient } from "expo-linear-gradient";
 
-export default function RegisterScreen () {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [username, setUsername] = useState('')
-  const [loading, setLoading] = useState(false)
-  
+import CTAButton from "../../components/Basics/CTAButton/CTAButton";
+import { COLORS, images } from "../../constants";
+import Logo from "../../components/Basics/Image/Logo";
+
+export default function RegisterScreen() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const nav = useNavigation();
 
-async function signUpWithEmail() {
-    setLoading(true)
+  async function signUpWithEmail() {
+    setLoading(true);
     const {
       data: { session },
       error,
-    } = await supabase.auth.signUp({
-      email: email,
-      password: password,
-      username: username,
-    })
+    } = await supabase.auth.signUp(
+      {
+        email: email,
+        password: password,
+      },
+      {
+        data: {
+          first_name: username,
+          age: 27,
+        },
+      }
+    );
 
-    if (error) Alert.alert(error.message)
-    if (!session) Alert.alert('Please check your inbox for email verification!')
-    setLoading(false)
+    if (error) Alert.alert(error.message);
+
+    setLoading(false);
   }
-
-    return (
-     <View style={styles.container}>
-       <LinearGradient
+  return (
+    <View style={styles.container}>
+      <LinearGradient
         colors={[COLORS.heroColour, "black"]}
         style={styles.background}
-      >   
+      >
         <View style={styles.wrapper}>
-          <Logo dimension={200} src={images.Logo}/>
-            <View style={styles.mainContent}>
-                  <TextInput
+          <Logo dimension={150} src={images.Logo} />
+          <View style={styles.mainContent}>
+            <TextInput
               style={styles.loginTextField}
               label="Name"
               placeholder="Username"
@@ -69,35 +75,34 @@ async function signUpWithEmail() {
               onChangeText={(text) => setPassword(text)}
               secureTextEntry
             />
-                    </View>
-                    <View style={styles.buttonContainer}>
-               <CTAButton
-                title="Login"
-                onPress={signUpWithEmail}
-              variant="primary" />
-            
-           <Text style={styles.textSignUp}>
-          Have an account?{" "}
-              <Text onPress={() => nav.navigate("Login")
-          }>
-             Sign In
-          </Text>
-          </Text>
           </View>
+          <View style={styles.buttonContainer}>
+            <CTAButton
+              title="Login"
+              onPress={signUpWithEmail}
+              variant="primary"
+              height={50}
+            />
+
+            <Text style={styles.textSignUp}>
+              Have an account?{" "}
+              <Text onPress={() => nav.navigate("Login")}>Sign In</Text>
+            </Text>
           </View>
-        </LinearGradient>
         </View>
-    )
+      </LinearGradient>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
-   background: {
-    position: 'absolute',
+  background: {
+    position: "absolute",
     left: 0,
     right: 0,
     top: 0,
@@ -106,7 +111,7 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
     marginTop: 0,
-    padding: 40, 
+    padding: 40,
   },
   loginTextField: {
     borderBottomWidth: 1,
@@ -116,7 +121,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     fontWeight: "300",
     color: COLORS.fontColour,
-    textDecorationLine: 'none',
+    textDecorationLine: "none",
   },
   buttonContainer: {
     top: 40,
@@ -124,5 +129,5 @@ const styles = StyleSheet.create({
   textSignUp: {
     marginTop: 20,
     color: "white",
-  }
-})
+  },
+});

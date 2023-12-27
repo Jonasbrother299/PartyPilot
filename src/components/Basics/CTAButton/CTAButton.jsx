@@ -1,18 +1,20 @@
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
 
-import { COLORS } from "../../constants";
+import { COLORS } from "../../../constants";
 
-export default function CTAButton({ title, onPress, variant, dimesion }) {
+export default function CTAButton({ title, onPress, variant, height, width }) {
   const styles = StyleSheet.create({
     containerPrimary: {
-      height: 50,
+      height: height,
+      width: width,
       backgroundColor: COLORS.accentColour1Orange,
       borderRadius: 50,
       justifyContent: "center",
       alignItems: "center",
     },
     containerSecondary: {
-      height: 60,
+      height: height,
+      width: width,
       backgroundColor: "white",
       justifyContent: "center",
       alignItems: "center",

@@ -9,6 +9,8 @@ import close from "../../assets/icons/close.png";
 import cocktail from "../../assets/icons/cocktail.png";
 
 import saveIcon from "../../assets/icons/saveIcon.png";
+import edit from "../../assets/icons/edit.png";
+import kamera from "../../assets/icons/kamera.png";
 
 export default {
   home,
@@ -20,4 +22,6 @@ export default {
   close,
   cocktail,
   saveIcon,
+  edit,
+  kamera,
 };

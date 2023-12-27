@@ -9,14 +9,17 @@ import {
 
 import { COLORS, icons, images } from "../../constants";
 import { useNavigation } from "@react-navigation/native";
-import Icons from "../Image/icons";
-import FilterItemsDiscover from "../../screens/Discover/FilterItemsDiscover";
-import Spacer from "../Spacer/spacer";
-import SearchResult from "./SearchResults";
+import Icons from "../../components/Basics/Image/icons";
+import FilterItemsDiscover from "../../components/Search/FilterItemsDiscover";
+import Spacer from "../../components/Basics/Spacer/spacer";
+import SearchResult from "../../components/Search/SearchResults";
 
 export default function SearchIcon() {
   const [searchText, setSearchText] = useState("");
 
+  const handleSelect = (value) => {
+    setSearchText(value);
+  };
   const navigation = useNavigation();
 
   const inputRef = useRef(null);
@@ -35,11 +38,11 @@ export default function SearchIcon() {
   }, []);
 
   const data = [
-    { id: 1, image: images.CocktailImage, text: "Summer drink" },
-    { id: 2, image: images.CocktailImage, text: "Winter Drink" },
-    { id: 3, image: images.CocktailImage, text: "Text 3" },
-    { id: 4, image: images.CocktailImage, text: "Text 4" },
-    { id: 5, image: images.CocktailImage, text: "Text 5" },
+    { id: 1, image: images.CocktailImage, text: "Rum" },
+    { id: 2, image: images.CocktailImage, text: "Vodka" },
+    { id: 3, image: images.CocktailImage, text: "Tequila" },
+    { id: 4, image: images.CocktailImage, text: "Alcohol free" },
+    { id: 5, image: images.CocktailImage, text: "Beer" },
     { id: 6, image: images.CocktailImage, text: "Text 6" },
     { id: 7, image: images.CocktailImage, text: "Text 7" },
     { id: 8, image: images.CocktailImage, text: "Text 8" },
@@ -69,7 +72,7 @@ export default function SearchIcon() {
         </Spacer>
         {/* Second row: FilterItemsDiscover */}
         <View style={styles.filterItemsWrapper}>
-          <FilterItemsDiscover />
+          <FilterItemsDiscover onSelect={handleSelect} />
         </View>
 
         {/* Third row: Scrollable view */}

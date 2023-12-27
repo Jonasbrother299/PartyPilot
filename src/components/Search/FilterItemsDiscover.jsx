@@ -1,45 +1,53 @@
 import React from "react";
-import { View, FlatList, Text, StyleSheet, Image } from "react-native";
+import {
+  View,
+  FlatList,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 import { images } from "../../constants";
 import { LinearGradient } from "expo-linear-gradient";
 
 const data = [
-  { id: 1, image: images.CocktailImage, text: "Summer drink" },
-  { id: 2, image: images.CocktailImage, text: "Winter Drink" },
-  { id: 3, image: images.CocktailImage, text: "Text 3" },
-  { id: 4, image: images.CocktailImage, text: "Text 4" },
-  { id: 5, image: images.CocktailImage, text: "Text 5" },
-  { id: 6, image: images.CocktailImage, text: "Text 6" },
-  { id: 7, image: images.CocktailImage, text: "Text 7" },
-  { id: 8, image: images.CocktailImage, text: "Text 8" },
-  { id: 9, image: images.CocktailImage, text: "Text 9" },
+  { id: 1, image: images.CocktailImage, text: "Vodka" },
+  { id: 2, image: images.CocktailImage, text: "Tequila" },
+  { id: 3, image: images.CocktailImage, text: "Alcohol free" },
+  { id: 4, image: images.CocktailImage, text: "Beer" },
+  { id: 5, image: images.CocktailImage, text: "Rum" },
+  { id: 6, image: images.CocktailImage, text: "Alcohol free" },
+  { id: 7, image: images.CocktailImage, text: "Beer" },
+  { id: 8, image: images.CocktailImage, text: "Rum" },
 ];
 
-export default function FilterItemsDiscover() {
+export default function FilterItemsDiscover({ onSelect }) {
   return (
     <FlatList
       data={data}
       keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => (
-        <View style={styles.itemContainer}>
-          <View style={styles.imageContainer}>
-            <Image source={item.image} style={styles.image} />
-            <LinearGradient
-              colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.6)"]}
-              locations={[0.4, 0.9]}
-              style={styles.gradient}
-            />
+        <TouchableOpacity onPress={() => onSelect(item.text)}>
+          <View style={styles.itemContainer}>
+            <View style={styles.imageContainer}>
+              <Image source={item.image} style={styles.image} />
+              <LinearGradient
+                colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.6)"]}
+                locations={[0.4, 0.9]}
+                style={styles.gradient}
+              />
+            </View>
+            <View style={styles.textContainer}>
+              <Text style={styles.text}>{item.text}</Text>
+            </View>
           </View>
-          <View style={styles.textContainer}>
-            <Text style={styles.text}>{item.text}</Text>
-          </View>
-        </View>
+        </TouchableOpacity>
       )}
       horizontal={true}
       pagingEnabled={true}
       showsHorizontalScrollIndicator={false}
       snapToAlignment="start"
-      snapToInterval={220}
+      snapToInterval={160}
       decelerationRate="fast"
       initialScrollIndex={0}
       getItemLayout={(data, index) => ({
@@ -67,7 +75,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     borderRadius: 20,
-    overflow: "hidden", // Clip the image to the borderRadius
+    overflow: "hidden",
   },
   image: {
     width: "100%",

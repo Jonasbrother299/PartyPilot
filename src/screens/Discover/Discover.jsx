@@ -1,3 +1,4 @@
+import { useCallback, useState } from "react";
 import {
   Text,
   StyleSheet,
@@ -6,20 +7,24 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import { COLORS, SIZES, images } from "../../constants";
-import { useEffect, useState } from "react";
-import Spacer from "../../components/Spacer/spacer";
-import Background from "../../components/Image/Background";
-import SearchIcon from "../../components/Search/SearchIcon";
 import { supabase } from "../../config/supabaseConfig";
 import { LinearGradient } from "expo-linear-gradient";
+import { useFocusEffect } from "@react-navigation/native";
+
+import { COLORS, SIZES, images } from "../../constants";
+import Spacer from "../../components/Basics/Spacer/spacer";
+import Background from "../../components/Basics/Image/Background";
+import SearchIcon from "../../components/Search/SearchIcon";
 
 export default function Discover() {
   const [recipes, setRecipes] = useState([]);
-  useEffect(() => {
-    // Fetch events when the component mounts
-    fetchRecipe();
-  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      // Fetch recipes when the screen gains focus
+      fetchRecipe();
+    }, [])
+  );
 
   const fetchRecipe = async () => {
     try {
@@ -39,18 +44,12 @@ export default function Discover() {
   };
 
   const renderRecipeItem = ({ item }) => (
-    // Customize the rendering of each event item as needed
     <TouchableOpacity
       // onPress={() => handleEventPress(item)}
       style={styles.resultContainer}
     >
       <View style={styles.eventItem}>
-        <Image source={images.CocktailImage} style={styles.image} />
-        <LinearGradient
-          colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.9)"]}
-          locations={[0, 0.5]}
-          style={styles.gradient}
-        />
+        <Image source={{ uri: item.image }} style={styles.image} />
         <View style={styles.overlay}>
           <Text style={styles.recipeTitle}>{item.title}</Text>
         </View>
@@ -67,15 +66,17 @@ export default function Discover() {
           <Text style={styles.Headline}>Discover</Text>
           <SearchIcon />
         </View>
-        <FlatList
-          data={recipes}
-          ListEmptyComponent={handleEmpty}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={renderRecipeItem}
-          numColumns={2}
-          onRefresh={() => fetchRecipe()}
-          refreshing={false}
-        />
+        <Spacer vertical={30} horizontal={0}>
+          <FlatList
+            data={recipes}
+            ListEmptyComponent={handleEmpty}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={renderRecipeItem}
+            numColumns={2}
+            onRefresh={() => fetchRecipe()}
+            refreshing={false}
+          />
+        </Spacer>
       </Spacer>
     </View>
   );
@@ -92,6 +93,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     position: "relative",
+    backgroundColor: COLORS.heroColour,
   },
   backgroundImage: {
     flex: 1,
@@ -105,16 +107,26 @@ const styles = StyleSheet.create({
     color: COLORS.fontColour,
   },
   resultContainer: {
-    position: "relative",
+    flex: 1,
+    paddingBottom: 10,
+  },
+  eventItem: {
+    flex: 1,
+    marginBottom: 20,
+    overflow: "hidden",
+    borderColor: COLORS.primaryColour1, // Add border color
+    borderWidth: 1, // Add border width
+    marginHorizontal: 10,
   },
   image: {
-    width: 150,
+    width: "100%",
     height: 200,
     resizeMode: "cover",
     borderRadius: 8,
   },
   overlay: {
-    ...StyleSheet.absoluteFillObject,
+    width: "100%",
+    backgroundColor: COLORS.primaryColour1,
     justifyContent: "flex-end",
     alignItems: "center",
     paddingBottom: 8,

@@ -1,23 +1,12 @@
-import React, { useState } from "react";
-import {
-  Text,
-  TextInput,
-  Button,
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  Modal,
-  Image,
-} from "react-native";
-import { COLORS, SIZES, images, icons } from "../../constants";
-import DatePicker from "react-native-modern-datepicker";
-import { getFormatedDate } from "react-native-modern-datepicker";
-import { supabase } from "../../config/supabaseConfig";
+import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
+
 import { useSession } from "../../hooks/useSession";
 import { useNavigation } from "@react-navigation/native";
-import Icons from "../../components/Image/icons";
 import { LinearGradient } from "expo-linear-gradient";
-import Spacer from "../../components/Spacer/spacer";
+
+import { COLORS, SIZES, icons } from "../../constants";
+import Icons from "../../components/Basics/Image/icons";
+import Spacer from "../../components/Basics/Spacer/spacer";
 
 export default function CreateEvent({ route }) {
   const { event } = route.params;
@@ -28,8 +17,6 @@ export default function CreateEvent({ route }) {
   const handleGoBack = () => {
     navigation.goBack();
   };
-
-  const handleCreateEvent = async () => {};
 
   return (
     <View style={styles.container}>
